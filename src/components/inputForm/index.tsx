@@ -1,14 +1,10 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const InputForm = () => {
   const [commanderName, setCommanderName] = useState("");
   const [deckType, setDeckType] = useState("");
-  const [isDisabled, setIsDisabled] = useState(true);
-
-  useEffect(() => {
-    setIsDisabled(!commanderName || !deckType);
-  }, [commanderName, deckType]);
+  const isDisabled = commanderName === "" || deckType === "";
 
   const handleDeckType = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDeckType(e.target.value);
@@ -56,7 +52,7 @@ const InputForm = () => {
             : "bg-blue-500 hover:bg-blue-600"
         }`}
       >
-        Get NetDeck!!!
+        Get NetDeck!
       </button>
     </div>
   );
