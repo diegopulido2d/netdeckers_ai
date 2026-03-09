@@ -56,7 +56,7 @@ const InputForm = () => {
             : "bg-blue-500 hover:bg-blue-600"
         }`}
       >
-        Get NetDeck!
+        Get NetDeck!!!
       </button>
     </div>
   );
