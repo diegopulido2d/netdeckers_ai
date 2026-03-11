@@ -1,21 +1,35 @@
 "use client";
-import React, { useState } from "react";
 
-const InputForm = () => {
+import React, { useState, Dispatch, SetStateAction } from "react";
+import { generateAIResponse, getScryfallCardData } from "@/data/api";
+import { buildDeckPrompt } from "@/app/lib/buildDeckPrompt";
+import { ScryfallCard } from "@/types/types";
+
+const InputForm = ({
+  setResults,
+}: {
+  setResults: Dispatch<SetStateAction<ScryfallCard[] | null>>;
+}) => {
   const [commanderName, setCommanderName] = useState("");
-  const [deckType, setDeckType] = useState("");
-  const isDisabled = commanderName === "" || deckType === "";
 
-  const handleDeckType = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDeckType(e.target.value);
-  };
+  const isDisabled = commanderName === "";
+  const submitDeck = async () => {
+    if (!commanderName) return;
 
-  const submitDeck = (commanderName: string, deckType: string) => {
-    console.log(`Commander Name: ${commanderName}, Deck Type: ${deckType}`);
+    /*
+    const prompt = buildDeckPrompt({
+      commander: commanderName,
+    });
+    const deck = await generateResponse(prompt);
+    setResult(deck);
+    */
+    const result = await getScryfallCardData(commanderName);
+    setResults(result.data);
+    console.log(result.data);
   };
 
   return (
-    <div className="flex flex-col gap-4 items-center w-full">
+    <div className="flex flex-row gap-4 items-center justify-center w-full">
       <input
         type="text"
         value={commanderName}
@@ -23,36 +37,16 @@ const InputForm = () => {
         placeholder="Enter your commander's name"
         className="border p-2 rounded w-[300px]"
       />
-      <div className="flex gap-8">
-        <label>
-          <input
-            type="radio"
-            name="type"
-            value="Casual"
-            onChange={handleDeckType}
-          />
-          {" Casual"}
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="type"
-            value="Competitive"
-            onChange={handleDeckType}
-          />
-          {" Competitive"}
-        </label>
-      </div>
       <button
-        disabled={!commanderName || !deckType}
-        onClick={() => submitDeck(commanderName, deckType)}
+        disabled={!commanderName}
+        onClick={submitDeck}
         className={`text-white px-4 py-2 rounded ${
           isDisabled
             ? "bg-gray-400 cursor-not-allowed"
             : "bg-blue-500 hover:bg-blue-600"
         }`}
       >
-        Get NetDeck!
+        Get Commander
       </button>
     </div>
   );
