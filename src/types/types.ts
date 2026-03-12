@@ -165,6 +165,7 @@ export type PurchaseUris = {
 export type Commander = {
   name: string;
   color_identity: string[];
+  type_line: string;
   oracle_text: string;
 };
 
