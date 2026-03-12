@@ -11,6 +11,7 @@ const ResultItem = ({ result }: { result: ScryfallCard }) => {
     const commander: Commander = {
       name: result.name,
       color_identity: result.color_identity,
+      type_line: result.type_line,
       oracle_text: result.oracle_text || "",
     };
     setCommander(commander);

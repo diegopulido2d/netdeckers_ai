@@ -2,7 +2,7 @@
 
 import React, { useState, Dispatch, SetStateAction } from "react";
 import { generateAIResponse, getScryfallCardData } from "@/data/api";
-import { buildDeckPrompt } from "@/app/lib/buildDeckPrompt";
+import { buildDeckPrompt } from "@/lib/buildDeckPrompt";
 import { ScryfallCard } from "@/types/types";
 
 const InputForm = ({

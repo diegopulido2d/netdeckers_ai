@@ -1,7 +1,8 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useMyCommander } from "@/data/context";
+import { inferCommanderStrategies } from "../../lib/strategies";
 
 const Deck = () => {
   const { commander } = useMyCommander();
@@ -10,6 +11,15 @@ const Deck = () => {
   const handleBack = () => {
     router.push("/");
   };
+
+  useEffect(() => {
+    if (!commander) {
+      router.push("/");
+    } else {
+      const tags = inferCommanderStrategies(commander);
+      console.log("Inferred tags:", tags);
+    }
+  }, [commander, router]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
